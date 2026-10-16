@@ -1,0 +1,3 @@
+tag,train_images,weight
+algal_leaf_spot,4,2.375
+healthy_leaf,15,0.633333

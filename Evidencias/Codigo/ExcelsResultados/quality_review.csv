@@ -1,0 +1,12 @@
+check,result,details
+seed,pass,20261016
+approved_classes,pass,"algal_leaf_spot, healthy_leaf"
+internal_images,pass,27
+external_images,pass,186
+rejected_images,review,3
+algal_leaf_spot_test,pass,1
+healthy_leaf_test,pass,3
+algal_leaf_spot_train,pass,4
+healthy_leaf_train,pass,15
+algal_leaf_spot_val,pass,1
+healthy_leaf_val,pass,3

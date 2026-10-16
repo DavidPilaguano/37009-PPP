@@ -1,0 +1,380 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{longtable,booktabs,array,tabularx,ragged2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\geometry{top=2.2cm,bottom=2.3cm,left=2.1cm,right=2.1cm,headheight=15pt}
+\definecolor{azul}{HTML}{17365D}
+\definecolor{gris}{HTML}{F4F7FA}
+\hypersetup{hidelinks,pdftitle={SRS IA V3.0 - Aguacate}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{SRS IA Aguacate}
+\fancyhead[R]{V3.0}
+\fancyfoot[C]{\thepage}
+\titleformat{\section}{\Large\bfseries\color{azul}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.7em}{}
+\renewcommand{\arraystretch}{1.16}
+\setlist[itemize]{topsep=2pt,itemsep=2pt}
+\setlist[enumerate]{topsep=2pt,itemsep=2pt}
+\newcommand{\campo}[1]{\textbf{#1}}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{2.1cm}
+{\Huge\bfseries Especificación de Requisitos de Software\par}
+\vspace{0.6cm}
+{\Large Sistema de IA entrenada desde cero en servidor para detección temprana de enfermedades foliares en hojas de aguacate\par}
+\vspace{1.1cm}
+\textcolor{azul}{\rule{\linewidth}{1pt}}
+\vspace{0.3cm}
+\begin{longtable}{>{\bfseries}p{4cm}p{10cm}}
+Documento & SRS\_IA\_V3.0 \\
+Versión & V3.0 \\
+Estado & Versión revisada para validación académica \\
+Proyecto & IA para detección temprana de enfermedades foliares en aguacate \\
+Fecha & 02 de octubre de 2026 \\
+\end{longtable}
+\vspace{0.3cm}
+\textcolor{azul}{\rule{\linewidth}{1pt}}
+\vfill
+\end{titlepage}
+
+\pagenumbering{roman}
+\section*{Control documental}
+\begin{longtable}{p{3cm}p{11cm}}
+\toprule
+\campo{Código} & SRS\_IA\_V3.0 \\
+\campo{Nombre} & Especificación de Requisitos de Software del sistema de IA para detección temprana de enfermedades foliares del aguacate \\
+\campo{Versión} & V3.0 \\
+\campo{Responsable} & David Pilaguano Chisaguano Alexander \\
+\campo{Revisión académica} & Pendiente de tutor/director \\
+\campo{Base metodológica} & Fundamentos de ingeniería de software. Enfoque de ingeniería de requisitos: adquisición, especificación, validación y documentación. \\
+\campo{Fuentes técnicas} & Artículo YOLOv10s-SeqOpt, inventario bibliográfico del proyecto y SRS pdfLaTeX previo. \\
+\bottomrule
+\end{longtable}
+
+\section*{Historial de cambios}
+\begin{longtable}{p{2cm}p{3cm}p{4cm}p{6cm}}
+\toprule
+Versión & Fecha & Responsable & Cambio \\
+\midrule
+V1.0 & 02/10/2026 & David Pilaguano Chisaguano Alexander & Primera versión formal del SRS. \\
+V2.0 & 02/10/2026 & David Pilaguano Chisaguano Alexander & Segunda versión del documento con correcciones y actualización del contenido. \\
+V3.0 & 02/10/2026 & David Pilaguano Chisaguano Alexander & Versión delimitada exclusivamente al sistema de IA en servidor. \\
+\bottomrule
+\end{longtable}
+
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{Propósito del documento}
+El propósito de este documento es especificar de forma clara, verificable y trazable los requisitos del sistema de software que dará soporte al entrenamiento desde cero de una inteligencia artificial para la detección temprana de enfermedades foliares en hojas de aguacate. El documento define qué debe cumplir el sistema, no cómo será diseñado internamente.
+
+La elaboración sigue el enfoque de ingeniería de requisitos descrito por Ruiz Robalino y Lucio Moreno: adquisición, clasificación, priorización, especificación, validación y documentación. En consecuencia, este SRS define obligaciones verificables y mantiene fuera las decisiones propias del análisis y del diseño.
+
+\section{Alcance}
+El sistema cubrirá la gestión de datos, el registro de procedencia, la anotación manual, la revisión de etiquetas, la construcción de conjuntos de datos, el entrenamiento desde cero en servidor, la validación del modelo, el registro de experimentos, la inferencia controlada y la exportación de evidencia. La versión V3.0 corresponde exclusivamente al sistema de IA y no constituye una herramienta de diagnóstico fitosanitario definitivo.
+
+\subsection{Incluido en el alcance}
+\begin{itemize}
+\item Gestión de imágenes de hojas de aguacate y sus metadatos.
+\item Etiquetado manual de enfermedades foliares mediante anotaciones verificables.
+\item Organización de datasets para entrenamiento, validación y prueba.
+\item Entrenamiento de modelos desde cero en servidor.
+\item Registro de configuraciones, métricas, resultados y versiones.
+\item Evaluación del desempeño por clase y de forma global.
+\item Generación de resultados experimentales trazables.
+\end{itemize}
+
+\subsection{Fuera del alcance}
+\begin{itemize}
+\item Arquitectura final del sistema.
+\item Diseño de base de datos.
+\item Diagramas UML detallados.
+\item Código fuente.
+\item Aplicativo web para usuarios finales.
+\item Aplicativo móvil para usuarios finales.
+\item Diagnóstico agronómico definitivo sin validación de experto.
+\item Selección definitiva de un modelo sin evaluación experimental propia.
+\end{itemize}
+
+\section{Contexto del proyecto de investigación}
+El proyecto busca construir un sistema de IA entrenada desde cero para detectar tempranamente enfermedades foliares en hojas de aguacate. La carpeta del proyecto contiene una revisión sistemática de literatura, documentos previos de SRS, matrices de búsqueda, artículos científicos y una carpeta organizada con fuentes relacionadas con antracnosis, cercospora, tizón foliar, roña, araña roja, agallas foliares, visión artificial y UAV.
+
+El artículo de Karthik et al. propone un marco YOLOv10s-SeqOpt para detección temprana de enfermedades foliares del aguacate con imágenes UAV RGB y multiespectrales. Dicho estudio usa 5953 imágenes anotadas, 35422 instancias, clases como antracnosis, root rot, algal leaf spot y scab, además de métricas como precisión, recall, F1 y mAP. Estos datos se toman como referencia técnica, no como garantía de resultados para este proyecto.
+
+\section{Problema identificado}
+La detección de enfermedades foliares en aguacate depende con frecuencia de inspección visual manual. Este proceso puede ser lento, subjetivo y difícil de escalar. Además, los síntomas tempranos pueden confundirse con cambios de iluminación, sombras, daño físico u otras enfermedades visualmente similares. Para entrenar una IA confiable se requiere un sistema que controle la procedencia de datos, calidad de anotaciones, separación de datasets, entrenamiento reproducible y evaluación formal.
+
+\section{Objetivo general del sistema}
+Permitir la preparación, entrenamiento desde cero, validación y trazabilidad de modelos de inteligencia artificial orientados a detectar tempranamente enfermedades foliares en hojas de aguacate mediante imágenes organizadas, anotadas y evaluadas bajo un proceso reproducible.
+
+\section{Objetivos específicos del sistema}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Objetivo específico \\
+\midrule
+OE-01 & Registrar imágenes de hojas de aguacate con metadatos, procedencia y autorización de uso. \\
+OE-02 & Permitir la anotación manual y revisión de síntomas foliares. \\
+OE-03 & Organizar datasets versionados para entrenamiento, validación y prueba. \\
+OE-04 & Ejecutar entrenamientos desde cero en servidor, evitando pesos preentrenados cuando el experimento así lo declare. \\
+OE-05 & Registrar hiperparámetros, configuración, ambiente, métricas y resultados de cada experimento. \\
+OE-06 & Evaluar el modelo con métricas objetivas y criterios de aceptación definidos. \\
+OE-07 & Mantener trazabilidad entre imagen, etiqueta, dataset, experimento, modelo y resultado. \\
+\bottomrule
+\end{longtable}
+
+\section{Usuarios, actores e interesados}
+\begin{longtable}{p{3.5cm}p{5.5cm}p{5.7cm}}
+\toprule
+Actor & Necesidad & Participación \\
+\midrule
+Tesista investigador & Preparar datos, entrenar modelos y documentar resultados & Usuario principal del sistema \\
+Tutor o evaluador académico & Revisar coherencia metodológica y evidencia experimental & Revisor de documentación y resultados \\
+Especialista agrícola o fitopatólogo & Validar clases, síntomas y etiquetas dudosas & Validador experto \\
+Anotador & Etiquetar imágenes de hojas & Usuario operativo \\
+Administrador del servidor & Preparar entorno, recursos y seguridad & Soporte técnico \\
+\bottomrule
+\end{longtable}
+
+\section{Perspectiva del producto}
+El producto será un sistema de IA ejecutado en un servidor para preparar datos, entrenar modelos desde cero, validar su desempeño, registrar experimentos y ejecutar inferencias controladas. Su usuario principal será el equipo de investigación. El producto no incluye una aplicación web ni una aplicación móvil; esas soluciones podrán especificarse en SRS independientes durante fases futuras. La especificación se concentra en el comportamiento del proceso de IA y en los artefactos necesarios para reproducirlo.
+
+\section{Funciones generales del producto}
+\begin{itemize}
+\item Controlar el acceso técnico al entorno de investigación.
+\item Cargar imágenes y metadatos.
+\item Gestionar clases de enfermedades foliares.
+\item Crear y revisar anotaciones.
+\item Construir datasets versionados.
+\item Configurar entrenamientos desde cero.
+\item Ejecutar entrenamientos en servidor.
+\item Registrar métricas y resultados.
+\item Comparar experimentos.
+\item Exportar evidencia.
+\end{itemize}
+
+\section{Características de los usuarios}
+Los usuarios técnicos deberán poseer conocimientos básicos de manejo de archivos, imágenes, anotación y entrenamiento de modelos. El tesista deberá comprender conceptos de dataset, entrenamiento, validación, prueba, overfitting, métricas y versionamiento. El especialista agrícola no necesariamente deberá conocer programación, pero sí debe poder revisar evidencia visual de síntomas y etiquetas.
+
+\section{Supuestos}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Supuesto \\
+\midrule
+SUP-01 & Existirá un servidor disponible para entrenamiento de modelos. \\
+SUP-02 & Las imágenes usadas tendrán autorización, licencia compatible o fuente documentada. \\
+SUP-03 & El dataset final será validado por el tesista y, cuando sea posible, por un especialista. \\
+SUP-04 & El entrenamiento desde cero significa iniciar con pesos aleatorios, sin transfer learning, salvo que se documente como experimento comparativo separado. \\
+SUP-05 & La primera versión trabajará principalmente con imágenes RGB; el uso multiespectral o UAV queda como referencia o ampliación si no existen datos propios. \\
+\bottomrule
+\end{longtable}
+
+\section{Restricciones}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Restricción \\
+\midrule
+RES-01 & El SRS no define arquitectura ni diseño interno. \\
+RES-02 & Los resultados del artículo YOLOv10s-SeqOpt no se asumirán como resultados propios del proyecto. \\
+RES-03 & El sistema debe conservar trazabilidad de datos y experimentos. \\
+RES-04 & No se debe declarar diagnóstico definitivo sin validación experta. \\
+RES-05 & Los datos sin procedencia o autorización no deben usarse para entrenamiento final. \\
+\bottomrule
+\end{longtable}
+
+\section{Dependencias}
+\begin{itemize}
+\item Disponibilidad de servidor con recursos de cómputo suficientes.
+\item Disponibilidad de imágenes de hojas de aguacate.
+\item Definición de clases de enfermedades y criterios visuales.
+\item Librerías de aprendizaje profundo seleccionadas en análisis.
+\item Política de almacenamiento y respaldo.
+\item Revisión académica del tutor.
+\end{itemize}
+
+\section{Reglas de priorización}
+\begin{longtable}{p{3cm}p{11.5cm}}
+\toprule
+Prioridad & Criterio \\
+\midrule
+Alta & Obligatorio para que la V3.0 sea aceptable como sistema de investigación reproducible. \\
+Media & Importante para robustez, comodidad o ampliación, pero no bloquea el núcleo mínimo. \\
+Baja & Deseable para versiones futuras o mejoras posteriores. \\
+\bottomrule
+\end{longtable}
+
+\section{Requisitos funcionales}
+\small
+\begin{longtable}{p{1.2cm}p{2cm}p{3cm}p{1.8cm}p{2.2cm}p{3cm}p{2.4cm}p{1.4cm}p{2cm}p{3cm}p{1.6cm}}
+\toprule
+Código & Nombre & Descripción & Actor & Entrada & Proceso esperado & Salida & Prior. & Fuente & Criterio de aceptación & Estado \\
+\midrule
+RF-01 & Control del entorno experimental & El sistema deberá restringir el acceso técnico a datos, configuraciones, modelos y resultados. & Tesista/Administrador & Credenciales y permisos & Validar autorización antes de ejecutar operaciones críticas & Acceso autorizado o rechazo & Alta & Necesidad operativa & Un usuario sin autorización no puede modificar datos, configuraciones, modelos ni resultados. & Pendiente \\
+RF-02 & Responsabilidades de revisión & El sistema deberá distinguir las responsabilidades de tesista, anotador, revisor y administrador dentro del proceso de IA. & Administrador & Datos de responsabilidad & Asociar permisos a las tareas de datos, revisión y experimentación & Responsabilidad registrada & Alta & Stakeholders & Cada operación crítica queda asociada a un responsable autorizado. & Pendiente \\
+RF-03 & Carga de imágenes & El sistema deberá permitir cargar imágenes de hojas de aguacate individualmente o por lote. & Tesista & Imágenes JPG/PNG/TIFF & Validar formato, tamaño y duplicidad & Imágenes registradas & Alta & Proyecto & Un lote válido queda registrado con conteo de archivos aceptados y rechazados. & Pendiente \\
+RF-04 & Registro de procedencia & El sistema deberá registrar fuente, fecha, licencia, autor o institución y observaciones por lote. & Tesista & Metadatos de origen & Asociar metadatos a cada imagen & Registro de procedencia & Alta & Ingeniería de requisitos & Ninguna imagen sin procedencia queda habilitada para entrenamiento final. & Pendiente \\
+RF-05 & Catálogo de clases & El sistema deberá permitir administrar clases de enfermedades foliares y sus definiciones. & Tesista/Revisor & Nombre, descripción, guía visual & Crear o versionar clase & Catálogo actualizado & Alta & SLR del proyecto & Las clases quedan versionadas y no alteran etiquetas históricas. & Pendiente \\
+RF-06 & Anotación manual & El sistema deberá permitir dibujar cuadros delimitadores y asignar clase a lesiones visibles. & Anotador & Imagen y clase & Crear, editar o eliminar anotación & Etiqueta guardada & Alta & Artículo YOLOv10s-SeqOpt & Una imagen anotada conserva coordenadas, clase, autor y fecha. & Pendiente \\
+RF-07 & Revisión de anotaciones & El sistema deberá permitir aprobar, corregir o marcar como ambigua una anotación. & Revisor & Anotaciones & Revisar evidencia visual & Estado de revisión & Alta & Protocolo de anotación del artículo principal & Toda anotación usada en entrenamiento posee estado aprobado o decisión registrada. & Pendiente \\
+RF-08 & Gestión de dataset & El sistema deberá construir datasets versionados con particiones de entrenamiento, validación y prueba. & Tesista & Imágenes aprobadas & Separar datos sin fuga entre particiones & Dataset versionado & Alta & Fundamentos de requisitos y artículo técnico & El dataset muestra conteos por clase, partición y fuente. & Pendiente \\
+RF-09 & Configuración de entrenamiento & El sistema deberá permitir definir parámetros del entrenamiento desde cero. & Tesista & Dataset, épocas, tamaño, semilla, modelo & Validar configuración & Configuración registrada & Alta & Objetivo del proyecto & Un experimento no inicia si falta dataset, semilla o configuración mínima. & Pendiente \\
+RF-10 & Ejecución de entrenamiento & El sistema deberá ejecutar entrenamientos en servidor y registrar su estado. & Tesista & Configuración aprobada & Iniciar, monitorear y finalizar entrenamiento & Modelo y bitácora & Alta & Proyecto & Cada entrenamiento genera identificador, fechas, estado y artefactos. & Pendiente \\
+RF-11 & Registro de métricas & El sistema deberá registrar precisión, recall, F1, mAP, matriz de confusión y pérdidas cuando aplique. & Tesista & Resultados de evaluación & Calcular y almacenar métricas & Reporte de evaluación & Alta & Artículo YOLOv10s-SeqOpt & Las métricas quedan asociadas al modelo, dataset y configuración. & Pendiente \\
+RF-12 & Comparación de experimentos & El sistema deberá comparar experimentos por métricas, configuración y dataset. & Tesista & Dos o más experimentos & Contrastar resultados & Tabla comparativa & Media & Necesidad académica & La comparación muestra diferencias de dataset, semilla, parámetros y métricas. & Pendiente \\
+RF-13 & Inferencia controlada & El sistema deberá aplicar un modelo aprobado sobre nuevas imágenes. & Tesista & Imagen nueva y modelo & Ejecutar predicción & Clase, confianza y cuadro & Media & Objetivo del sistema & El resultado indica modelo usado, umbral y fecha. & Pendiente \\
+RF-14 & Exportación de evidencia & El sistema deberá exportar evidencia de dataset, configuración, modelo, métricas y resultados. & Tesista & Experimento seleccionado & Empaquetar artefactos & Archivo de evidencia & Alta & Trazabilidad académica & El paquete permite reconstruir qué datos y parámetros generaron el resultado. & Pendiente \\
+RF-15 & Auditoría básica & El sistema deberá registrar operaciones críticas sobre datos, etiquetas, entrenamiento y resultados. & Sistema & Evento de operación & Guardar usuario, fecha y acción & Bitácora auditada & Alta & Fundamentos de calidad & La bitácora permite identificar quién hizo cada cambio importante. & Pendiente \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Requisitos no funcionales}
+\small
+\begin{longtable}{p{1.4cm}p{2.4cm}p{5.2cm}p{4cm}p{1.4cm}p{2cm}p{3.8cm}p{1.6cm}}
+\toprule
+Código & Categoría & Descripción & Métrica o condición verificable & Prior. & Fuente & Criterio de aceptación & Estado \\
+\midrule
+RNF-01 & Reproducibilidad & El sistema deberá permitir repetir un experimento con la misma configuración. & Dataset, semilla, ambiente y parámetros registrados. & Alta & Fundamentos & Un experimento exportado contiene configuración suficiente para repetición. & Pendiente \\
+RNF-02 & Trazabilidad & Todo resultado deberá vincularse a imagen, etiqueta, dataset, modelo y experimento. & Identificadores cruzados completos. & Alta & Fundamentos & No existen métricas sin experimento asociado. & Pendiente \\
+RNF-03 & Seguridad & El acceso a datos y modelos deberá estar protegido por autenticación. & Roles y sesiones controladas. & Alta & Necesidad operativa & Usuario sin rol no accede a datos. & Pendiente \\
+RNF-04 & Integridad & Las imágenes originales no deberán sobrescribirse. & Hash o suma de verificación por archivo. & Alta & Buenas prácticas & Una imagen original conserva hash estable. & Pendiente \\
+RNF-05 & Usabilidad & La anotación deberá poder realizarse sin modificar archivos manualmente. & Flujo visual de carga, anotación y revisión. & Media & Usuarios & Un anotador completa el flujo sin línea de comandos. & Pendiente \\
+RNF-06 & Rendimiento & La inferencia deberá ejecutarse en tiempo razonable según servidor disponible. & Valor final pendiente de servidor. & Media & Artículo técnico & Se declara métrica real tras pruebas internas. & Pendiente de validación \\
+RNF-07 & Escalabilidad & El sistema deberá admitir crecimiento de dataset sin perder trazabilidad. & Capacidad inicial por definir. & Media & Proyecto & Se documenta límite probado de imágenes y etiquetas. & Pendiente de validación \\
+RNF-08 & Mantenibilidad & Los parámetros deben estar configurados, no codificados rígidamente. & Archivos o formularios de configuración. & Media & Ingeniería de software & Cambiar ruta o umbral no requiere modificar código fuente. & Pendiente \\
+RNF-09 & Compatibilidad & Las etiquetas deberán poder exportarse a formatos comunes. & YOLO o COCO como mínimo. & Alta & Estado del arte & Un dataset exportado conserva clases y coordenadas. & Pendiente \\
+RNF-10 & Uso responsable & El sistema deberá advertir que sus resultados son experimentales. & Mensaje visible en reportes. & Alta & Ética académica & Ningún reporte presenta el resultado como diagnóstico definitivo. & Pendiente \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Requisitos de datos}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Requisito \\
+\midrule
+RD-01 & Cada imagen deberá tener identificador único, formato, dimensiones, fuente, fecha de carga y estado de autorización. \\
+RD-02 & Cada anotación deberá registrar clase, coordenadas, autor, revisor, fecha y estado. \\
+RD-03 & El dataset deberá mostrar distribución por clase y por partición. \\
+RD-04 & Las imágenes de entrenamiento, validación y prueba no deberán compartir duplicados ni derivados directos. \\
+RD-05 & Los datos sin licencia clara deberán marcarse como ``Pendiente de validación'' y excluirse de resultados finales. \\
+\bottomrule
+\end{longtable}
+
+\section{Requisitos de entrenamiento de IA}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Requisito \\
+\midrule
+RIA-01 & El sistema deberá permitir declarar si un experimento inicia desde cero o usa pesos previos; la V3.0 prioriza entrenamiento desde cero. \\
+RIA-02 & Todo entrenamiento deberá registrar dataset, arquitectura candidata, semilla, hiperparámetros, número de épocas y ambiente de ejecución. \\
+RIA-03 & Los aumentos de datos deberán aplicarse solo al conjunto de entrenamiento. \\
+RIA-04 & Los checkpoints deberán conservarse con identificación del experimento. \\
+RIA-05 & Si se usa una arquitectura YOLO como referencia, deberá documentarse como decisión experimental y no como decisión definitiva del SRS. \\
+\bottomrule
+\end{longtable}
+
+\section{Requisitos de validación del modelo}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Requisito \\
+\midrule
+RVM-01 & El modelo deberá evaluarse con un conjunto no usado durante entrenamiento. \\
+RVM-02 & Se deberán reportar precisión, recall, F1, mAP e IoU cuando la técnica lo permita. \\
+RVM-03 & Las métricas deberán presentarse de forma global y por clase. \\
+RVM-04 & Toda comparación con el artículo YOLOv10s-SeqOpt deberá declararse como referencia externa, no como reproducción confirmada. \\
+RVM-05 & Las limitaciones del dataset propio deberán registrarse antes de aprobar resultados. \\
+\bottomrule
+\end{longtable}
+
+\section{Requisitos de seguridad}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Requisito \\
+\midrule
+SEG-01 & El acceso deberá requerir autenticación. \\
+SEG-02 & Las operaciones críticas deberán quedar auditadas. \\
+SEG-03 & Las copias de respaldo deberán proteger datos, anotaciones, modelos y resultados. \\
+SEG-04 & Los metadatos sensibles de imágenes deberán revisarse antes de compartir datasets. \\
+\bottomrule
+\end{longtable}
+
+\section{Requisitos de trazabilidad}
+La trazabilidad mínima deberá relacionar objetivos, requisitos, criterios de aceptación, datasets, experimentos, métricas y artefactos. Ningún resultado académico deberá presentarse sin identificar la versión de datos y la configuración que lo produjo.
+
+\section{Requisitos de documentación}
+\begin{itemize}
+\item Manual técnico de preparación del servidor.
+\item Registro de datasets.
+\item Registro de experimentos.
+\item Reporte de métricas.
+\item Bitácora de cambios por versión.
+\item Estado del arte actualizado.
+\end{itemize}
+
+\section{Criterios de aceptación}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Criterio \\
+\midrule
+CA-01 & El sistema permite cargar imágenes con procedencia completa. \\
+CA-02 & El sistema permite crear y revisar anotaciones. \\
+CA-03 & El sistema genera datasets versionados sin fuga evidente entre particiones. \\
+CA-04 & El sistema ejecuta al menos un entrenamiento desde cero en servidor. \\
+CA-05 & El sistema registra métricas globales y por clase. \\
+CA-06 & El sistema exporta evidencia trazable de un experimento. \\
+CA-07 & El sistema diferencia entre detección, no detección e imagen no evaluable. \\
+\bottomrule
+\end{longtable}
+
+\section{Matriz de trazabilidad}
+\begin{longtable}{p{2cm}p{5cm}p{4cm}p{4cm}}
+\toprule
+Objetivo & Requisitos principales & Evidencia esperada & Criterios \\
+\midrule
+OE-01 & RF-03, RF-04, RD-01 & Lotes con procedencia & CA-01 \\
+OE-02 & RF-05, RF-06, RF-07, RD-02 & Etiquetas revisadas & CA-02 \\
+OE-03 & RF-08, RD-03, RD-04 & Dataset versionado & CA-03 \\
+OE-04 & RF-09, RF-10, RIA-01 a RIA-04 & Bitácora de entrenamiento & CA-04 \\
+OE-05 & RF-11, RF-12, RVM-01 a RVM-05 & Reporte de métricas & CA-05 \\
+OE-06 & RF-13, RF-14 & Evidencia exportada & CA-06 \\
+OE-07 & RF-15, RNF-01, RNF-02 & Auditoría y trazabilidad & CA-07 \\
+\bottomrule
+\end{longtable}
+
+\section{Exclusiones del SRS}
+Este documento excluye arquitectura final, diseño de base de datos, diagramas UML detallados, implementación, código fuente, selección final del modelo, aplicativo web, aplicativo móvil, API para clientes externos y análisis profundo del sistema. Cualquier decisión de ese tipo deberá documentarse en fases posteriores y, cuando corresponda, en SRS independientes.
+
+\section{Pendientes para la fase de análisis}
+\begin{longtable}{p{2cm}p{12.5cm}}
+\toprule
+Código & Pendiente \\
+\midrule
+PA-01 & Confirmar servidor real, GPU, RAM, almacenamiento y sistema operativo. \\
+PA-02 & Confirmar clases definitivas de enfermedades foliares. \\
+PA-03 & Confirmar disponibilidad y licencia de datasets. \\
+PA-04 & Definir arquitectura, tecnología y base de datos. \\
+PA-05 & Definir umbrales mínimos de desempeño aceptables para el proyecto propio. \\
+PA-06 & Diseñar plan de pruebas y validación con el tutor. \\
+\bottomrule
+\end{longtable}
+
+\section{Bibliografía}
+\begin{enumerate}
+\item Ruiz Robalino, J. A., y Lucio Moreno, X. I. (2025). \textit{Fundamentos de ingeniería de software: Un enfoque práctico}. Universidad de las Fuerzas Armadas ESPE.
+\item Karthik, R. P., Govindasamy, M., Muthusamy, S., y Routray, A. (2026). Spectrally optimised YOLOv10s-SeqOpt framework for real-time UAV-based early detection of avocado foliar diseases in Indian orchards. \textit{Scientific Reports}, 16, 17129. \url{https://doi.org/10.1038/s41598-026-50025-z}
+\item Inventario bibliográfico del proyecto EnfermedadesAguacate, revisión local de fuentes, SLR\_Hojas\_aguacate\_V1.7.
+\end{enumerate}
+\end{document}
